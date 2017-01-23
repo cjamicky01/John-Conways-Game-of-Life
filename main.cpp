@@ -138,7 +138,7 @@ void PrintGrid(int grid[][CMAX])
 /***********************************************************************/
 /***********************************************************************/
 
-#include "project01.cpp"
+//#include "project01.cpp"
 
 /***********************************************************************/
 /***********************************************************************/
@@ -148,7 +148,7 @@ void PrintGrid(int grid[][CMAX])
 void OpenInputFile(string filename, ifstream& inFile) {
 	//OpenInputFile -- Open file whose name is stored in filename
 
-	inFile.open(filename);
+	inFile.open(filename, std::ifstream::in);
 }
 
 void LoadConstraints(ifstream& inFile, int& num, string& bstring, string& sstring) {
