@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <fstream>
 #include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -18,42 +20,38 @@ int  CountType1Neighbors(int grid[][CMAX], int row, int col);
 int  CountType2Neighbors(int grid[][CMAX], int row, int col);
 void ParseRequirementsString(string requirements, int reqs[]);
 
-void OpenInputFile(string filename, ifstream& inFile) {
+void OpenInputFile(string filename, ifstream& inFile) { 
+
+//WORKS
+
+
 	//OpenInputFile -- Open file whose name is stored in filename
 
 	inFile.open(filename.c_str(), std::ifstream::in);
 }
 
 void LoadConstraints(ifstream& inFile, int& num, string& bstring, string& sstring) {
+
+
+//WORKS
+
+
 	//LoadConstraints -- loads only simulation constraints from inFile after skipping header comment.
 	//Constraints input in order num, birth string, survival string
-
+	string line;
 	getline(inFile, line); //Pull first comment line
 	getline(inFile, line); //Pull iterations
+	getline(inFile, line);
 	num = atoi(line.c_str());
-	bstring = getline(inFile, line); //Pull birth string
-	sstring = getline(inFile, line); //Pull survival string
+	getline(inFile, line);
+	getline(inFile, bstring); //Pull birth string
+	getline(inFile, line);
+	getline(inFile, sstring); //Pull survival string
 }
 
 void LoadGrid(ifstream& inFile, int grid[][CMAX]) {
 	//LoadGrid -- Loads the cell grid from inFile
-	string word;
-	char x;
-	int f = 0;
-	word.clear();
-
-	while (inFile >> word) {
-		x = inFile.get();
-		while (x != ' ') {
-			word = word + x;
-			x = inFile.get();
-		}
-		f++;
-		if (f > 14) {
-			cout << word << endl;
-		}
-		word.clear();
-	}
+	
 }
 
 void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int survival[]) {
@@ -64,23 +62,59 @@ void CopyGrid(const int source[][CMAX], int next[][CMAX]) {
 	//CopyGrid -- copies contents of source array into destination array
 }
 
-int CountType1Neighbors(int grid[][CMAX], int row, int col);
+int CountType2Neighbors(int grid[][CMAX], int row, int col){
+
+
+//WORKS
+
+
 //CountType1Neighbors -- counts the total number of LIVING Type1 neighbors for the cell at the
 //grid position specified by row and col.
-
-int CountType1Neighbors(int grid[][CMAX], int row, int col) {
-	//CountType1Neighbors -- counts the total number of LIVING Type2 neighbors for the cell at the
-	//grid position specified by row and col.
-	int Total1Neighbors = 0;
-
+int Total2Neighbors = 0;
+	for(int ir = -1; ir = 1; ir++){
+		for(int ic = -1; ic = 1; ic++){
+			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
+				Total2Neighbors++;
+			}
+		}		
+	}
 	
 
 
 
-	return TotalNeighbors;
+	return Total2Neighbors;
+}
+
+int CountType1Neighbors(int grid[][CMAX], int row, int col) {
+
+
+//WORKS
+
+
+
+	//CountType1Neighbors -- counts the total number of LIVING Type2 neighbors for the cell at the
+	//grid position specified by row and col.
+	int Total1Neighbors = 0;
+	for(int ir = -1; ir = 1; ir++){
+		for(int ic = -1; ic = 1; ic++){
+			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
+				Total1Neighbors++;
+			}
+		}		
+	}
+	
+
+
+
+	return Total1Neighbors;
 }
 
 void ParseRequirementsString(string requirements, int reqs[]) {
+
+
+//WORKS
+
+
 	const char *buffer = requirements.c_str();
 	char c;
 	while (c = *buffer++)
