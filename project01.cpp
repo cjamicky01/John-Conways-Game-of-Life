@@ -51,15 +51,103 @@ void LoadConstraints(ifstream& inFile, int& num, string& bstring, string& sstrin
 
 void LoadGrid(ifstream& inFile, int grid[][CMAX]) {
 	//LoadGrid -- Loads the cell grid from inFile
-	
+
+	string line;
+	for(int z = 0; z < 9; z++){
+	getline(inFile, line);
+	}
+	for(int g = 0; g < CMAX; g++){
+		for(int h = 0; h < RMAX; h++){
+			getline(inFile, line, ' ');
+			grid[g][h] = atoi(line.c_str()); //pull values of grid in text file here
+		}
+	}
 }
 
 void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int survival[]) {
 	//ComputeNextGrid -- uses  current generation to compute next generation using constraints specified in birth and survival arrays
+	int neigh1 = 0;
+	int neigh2 = 0;
+	int maxBirth = birth[0];
+	int minBirth = birth[0];
+	int maxSurv = survival[0];
+	int minSurv = survival [0];
+
+	for(int t = 1; t < 10; t++){
+		if(minBirth > birth[t]){
+			minBirth = birth[t];
+		} else if(maxBirth < birth[t]){
+			maxBirth = birth[t];
+		}
+	}
+
+	for(int r = 1; r < 10; r++){
+		if(minSurv > survival[r]){
+			minSurv = survival[r];
+		} else if(maxSurv < survival[r]){
+			maxSurv = survival[r];
+		}
+	}
+	
+
+	for(int i = 0; i < CMAX; i++){
+		for(int j = 0; j < RMAX; j++){
+			neigh1 = CountType1Neighbors(current, i, j);
+			neigh2 = CountType2Neighbors(current, i, j);
+
+
+			if(current[i][j] == 1){
+				if(neigh1 >= minSurv && neigh1 <= maxSurv){
+					next[i][j] = 1;
+				} else {
+					next[i][j] = 0;
+				}
+			}
+			
+			if(current[i][j] == 2){
+				if(neigh2 >= minSurv && neigh2 <= maxSurv){
+					next[i][j] = 2;
+				} else {
+					next[i][j] = 0;
+				}
+			}
+			
+			if(current[i][j] == 0){
+				if(neigh1 > neigh2){
+					if(neigh1 >= minBirth && neigh1 <= maxBirth){
+					next[i][j] = 1;
+				} else {
+					next[i][j] = 0;
+				}
+				if(neigh1 < neigh2){
+					if(neigh2 >= minBirth && neigh2 <= maxBirth){
+					next[i][j] = 2;
+				} else {
+					next[i][j] = 0;
+				}
+			}
+	
+			
+		}
+	}
+
 }
 
-void CopyGrid(const int source[][CMAX], int next[][CMAX]) {
+void CopyGrid(const int source[][CMAX], int next[][CMAX]) { 
+
+
+//NEEDS TO BE TESTED
+
+
+
 	//CopyGrid -- copies contents of source array into destination array
+	
+	for(int i = 0; i < CMAX; i++){
+		for(int j = 0; j < RMAX; j++){
+			next[i][j] = source[i][j];
+		}
+	}
+
 }
 
 int CountType2Neighbors(int grid[][CMAX], int row, int col){
