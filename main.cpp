@@ -7,6 +7,9 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -27,11 +30,11 @@ int  CountType1Neighbors(int grid[][CMAX], int row, int col);
 int  CountType2Neighbors(int grid[][CMAX], int row, int col);
 void ParseRequirementsString(string requirements, int reqs[]);
 
-int main()
+int main(int argc, char* argv[])
 {
 
   ifstream  inFile;                    // Input stream for reading grid file
-  string    filename= "p01input2.txt";				   // Name of grid file
+  string    filename;				   // Name of grid file
   string    bstring;                   // Birth requirements as C++ string
   string    sstring;                   // Survival requirement as C++ string
   int       currentgrid[RMAX][CMAX];   // Current cell grid
@@ -40,13 +43,13 @@ int main()
   int       birth[9], survival[9];     // Birth and survival look up arrays
 
 
-  /*if (argc != 2)
+  if (argc != 2)
   {
     cout << "Usage:  project01  <gridfile>" << endl;
     return 0;
   }
   else
-    filename = argv[1];*/
+    filename = argv[1];
 	
   OpenInputFile(filename, inFile);     // Attempt to open grid file
   if (!inFile)

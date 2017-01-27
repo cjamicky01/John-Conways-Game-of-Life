@@ -473,7 +473,10 @@ int CountType2Neighbors(int grid[][CMAX], int row, int col) {
 	for (int ir = -1; ir <= 1; ir++) {
 		for (int ic = -1; ic <= 1; ic++) {
 			if (grid[(row + ir + RMAX) % RMAX][(col + ic + CMAX) % CMAX] == 2) {
+				if(((row+ir+RMAX)%RMAX) == row && ((col+ic+CMAX)%CMAX) == col){
+				} else {
 				Total2Neighbors++;
+				}
 			}
 		}
 	}
@@ -497,7 +500,10 @@ int CountType1Neighbors(int grid[][CMAX], int row, int col) {
 	for (int ir = -1; ir <= 1; ir++) {
 		for (int ic = -1; ic <= 1; ic++) {
 			if (grid[(row + ir + RMAX) % RMAX][(col + ic + CMAX) % CMAX] == 1) {
+				if(((row+ir+RMAX)%RMAX) == row && ((col+ic+CMAX)%CMAX) == col){
+				} else {
 				Total1Neighbors++;
+				}
 			}
 		}
 	}
