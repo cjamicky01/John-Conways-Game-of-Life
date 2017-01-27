@@ -20,9 +20,10 @@ int  CountType1Neighbors(int grid[][CMAX], int row, int col);
 int  CountType2Neighbors(int grid[][CMAX], int row, int col);
 void ParseRequirementsString(string requirements, int reqs[]);
 
-void OpenInputFile(string filename, ifstream& inFile) { 
 
-//WORKS
+void OpenInputFile(string filename, ifstream& inFile) {
+
+	//WORKS
 
 
 	//OpenInputFile -- Open file whose name is stored in filename
@@ -33,7 +34,7 @@ void OpenInputFile(string filename, ifstream& inFile) {
 void LoadConstraints(ifstream& inFile, int& num, string& bstring, string& sstring) {
 
 
-//WORKS
+	//WORKS
 
 
 	//LoadConstraints -- loads only simulation constraints from inFile after skipping header comment.
@@ -56,8 +57,8 @@ void LoadGrid(ifstream& inFile, int grid[][CMAX]) {
 	//for(int z = 0; z < 9; z++){
 	getline(inFile, line);
 	//}
-	for(int g = 0; g < CMAX; g++){
-		for(int h = 0; h < RMAX; h++){
+	for (int g = 0; g < CMAX; g++) {
+		for (int h = 0; h < RMAX; h++) {
 			getline(inFile, line, ' ');
 			grid[g][h] = atoi(line.c_str()); //pull values of grid in text file here
 		}
@@ -73,101 +74,110 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 	int maxSurv = 0;
 	int minSurv = 9;
 
-	for(int t = 1; t < 10; t++){
-		if(minBirth > birth[t] && birth[t] != 0){
+	for (int t = 1; t < 9; t++) {
+		if (minBirth > birth[t] && birth[t] != 0) {
 			minBirth = birth[t];
-		} else if(maxBirth < birth[t]){
+		}
+		else if (maxBirth < birth[t]) {
 			maxBirth = birth[t];
 		}
 	}
 
-	for(int r = 1; r < 10; r++){
-		if(minSurv > survival[r] && survival[r] != 0){
+	for (int r = 1; r < 9; r++) {
+		if (minSurv > survival[r] && survival[r] != 0) {
 			minSurv = survival[r];
-		} else if(maxSurv < survival[r]){
+		}
+		else if (maxSurv < survival[r]) {
 			maxSurv = survival[r];
 		}
 	}
-	
 
-	for(int i = 0; i < CMAX; i++){
-		for(int j = 0; j < RMAX; j++){
+
+	for (int i = 0; i < CMAX; i++) {
+		for (int j = 0; j < RMAX; j++) {
 			neigh1 = CountType1Neighbors(current, j, i);
 			neigh2 = CountType2Neighbors(current, j, i);
 
 
-			if(current[i][j] == 1){
-				if(neigh1 >= minSurv && neigh1 <= maxSurv){
+			if (current[i][j] == 1) {
+				if (neigh1 >= minSurv && neigh1 <= maxSurv) {
 					next[i][j] = 1;
-				} else {
+				}
+				else {
 					next[i][j] = 0;
 				}
 			}
-			
-			if(current[i][j] == 2){
-				if(neigh2 >= minSurv && neigh2 <= maxSurv){
+
+			if (current[i][j] == 2) {
+				if (neigh2 >= minSurv && neigh2 <= maxSurv) {
 					next[i][j] = 2;
-				} else {
+				}
+				else {
 					next[i][j] = 0;
 				}
 			}
-			
-			if(current[i][j] == 0){
-				if(neigh1 > neigh2){
-					if(neigh1 >= minBirth && neigh1 <= maxBirth){
-					next[i][j] = 1;
-				} else {
-					next[i][j] = 0;
-				}
-				if(neigh1 < neigh2){
-					if(neigh2 >= minBirth && neigh2 <= maxBirth){
-					next[i][j] = 2;
-				} else {
-					next[i][j] = 0;
+
+			if (current[i][j] == 0) {
+				if (neigh1 > neigh2) {
+					if (neigh1 >= minBirth && neigh1 <= maxBirth) {
+						next[i][j] = 1;
+					}
+					else {
+						next[i][j] = 0;
+					}
+					if (neigh1 < neigh2) {
+						if (neigh2 >= minBirth && neigh2 <= maxBirth) {
+							next[i][j] = 2;
+						}
+						else {
+							next[i][j] = 0;
+						}
+					}
+
 				}
 			}
-	
+			if (current[i][j] != 1 && current[i][j] != 2 && current[i][j] != 0) {
+				next[i][j] = 0;
+			}
+			next[i][j];
 		}
 	}
-
-}
-}
 }
 
-void CopyGrid(const int source[][CMAX], int next[][CMAX]) { 
+void CopyGrid(const int source[][CMAX], int destination[][CMAX]) {
 
 
-//NEEDS TO BE TESTED
+	//NEEDS TO BE TESTED
 
 
 
 	//CopyGrid -- copies contents of source array into destination array
-	
-	for(int i = 0; i < CMAX; i++){
-		for(int j = 0; j < RMAX; j++){
-			next[i][j] = source[i][j];
+
+	for (int i = 0; i < CMAX; i++) {
+		for (int j = 0; j < RMAX; j++) {
+			destination[i][j] = source[i][j];
 		}
 	}
 
 }
 
-int CountType2Neighbors(int grid[][CMAX], int row, int col){
+int CountType2Neighbors(int grid[][CMAX], int row, int col) {
 
 
-//WORKS
+	//WORKS
 
 
-//CountType1Neighbors -- counts the total number of LIVING Type1 neighbors for the cell at the
-//grid position specified by row and col.
-int Total2Neighbors = 0;
-	for(int ir = -1; ir <= 1; ir++){
-		for(int ic = -1; ic <= 1; ic++){
-			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
+	//CountType1Neighbors -- counts the total number of LIVING Type1 neighbors for the cell at the
+	//grid position specified by row and col.
+	int Total2Neighbors = 0;
+	for (int ir = -1; ir <= 1; ir++) {
+		for (int ic = -1; ic <= 1; ic++) {
+			if (grid[(row + ir + RMAX) % RMAX][(col + ic + CMAX) % CMAX] == 1) {
 				Total2Neighbors++;
 			}
-		}		
+		}
 	}
-	
+
 
 
 
@@ -177,21 +187,21 @@ int Total2Neighbors = 0;
 int CountType1Neighbors(int grid[][CMAX], int row, int col) {
 
 
-//WORKS
+	//WORKS
 
 
 
 	//CountType1Neighbors -- counts the total number of LIVING Type2 neighbors for the cell at the
 	//grid position specified by row and col.
 	int Total1Neighbors = 0;
-	for(int ir = -1; ir <= 1; ir++){
-		for(int ic = -1; ic <= 1; ic++){
-			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
+	for (int ir = -1; ir <= 1; ir++) {
+		for (int ic = -1; ic <= 1; ic++) {
+			if (grid[(row + ir + RMAX) % RMAX][(col + ic + CMAX) % CMAX] == 1) {
 				Total1Neighbors++;
 			}
-		}		
+		}
 	}
-	
+
 
 
 
@@ -201,7 +211,7 @@ int CountType1Neighbors(int grid[][CMAX], int row, int col) {
 void ParseRequirementsString(string requirements, int reqs[]) {
 
 
-//WORKS
+	//WORKS
 
 
 	const char *buffer = requirements.c_str();
