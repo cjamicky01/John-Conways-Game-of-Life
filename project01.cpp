@@ -53,9 +53,9 @@ void LoadGrid(ifstream& inFile, int grid[][CMAX]) {
 	//LoadGrid -- Loads the cell grid from inFile
 
 	string line;
-	for(int z = 0; z < 9; z++){
+	//for(int z = 0; z < 9; z++){
 	getline(inFile, line);
-	}
+	//}
 	for(int g = 0; g < CMAX; g++){
 		for(int h = 0; h < RMAX; h++){
 			getline(inFile, line, ' ');
@@ -68,13 +68,13 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 	//ComputeNextGrid -- uses  current generation to compute next generation using constraints specified in birth and survival arrays
 	int neigh1 = 0;
 	int neigh2 = 0;
-	int maxBirth = birth[0];
-	int minBirth = birth[0];
-	int maxSurv = survival[0];
-	int minSurv = survival [0];
+	int maxBirth = 0;
+	int minBirth = 9;
+	int maxSurv = 0;
+	int minSurv = 9;
 
 	for(int t = 1; t < 10; t++){
-		if(minBirth > birth[t]){
+		if(minBirth > birth[t] && birth[t] != 0){
 			minBirth = birth[t];
 		} else if(maxBirth < birth[t]){
 			maxBirth = birth[t];
@@ -82,7 +82,7 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 	}
 
 	for(int r = 1; r < 10; r++){
-		if(minSurv > survival[r]){
+		if(minSurv > survival[r] && survival[r] != 0){
 			minSurv = survival[r];
 		} else if(maxSurv < survival[r]){
 			maxSurv = survival[r];
@@ -92,8 +92,8 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 
 	for(int i = 0; i < CMAX; i++){
 		for(int j = 0; j < RMAX; j++){
-			neigh1 = CountType1Neighbors(current, i, j);
-			neigh2 = CountType2Neighbors(current, i, j);
+			neigh1 = CountType1Neighbors(current, j, i);
+			neigh2 = CountType2Neighbors(current, j, i);
 
 
 			if(current[i][j] == 1){
@@ -127,10 +127,11 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 				}
 			}
 	
-			
 		}
 	}
 
+}
+}
 }
 
 void CopyGrid(const int source[][CMAX], int next[][CMAX]) { 
@@ -159,8 +160,8 @@ int CountType2Neighbors(int grid[][CMAX], int row, int col){
 //CountType1Neighbors -- counts the total number of LIVING Type1 neighbors for the cell at the
 //grid position specified by row and col.
 int Total2Neighbors = 0;
-	for(int ir = -1; ir = 1; ir++){
-		for(int ic = -1; ic = 1; ic++){
+	for(int ir = -1; ir <= 1; ir++){
+		for(int ic = -1; ic <= 1; ic++){
 			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
 				Total2Neighbors++;
 			}
@@ -183,8 +184,8 @@ int CountType1Neighbors(int grid[][CMAX], int row, int col) {
 	//CountType1Neighbors -- counts the total number of LIVING Type2 neighbors for the cell at the
 	//grid position specified by row and col.
 	int Total1Neighbors = 0;
-	for(int ir = -1; ir = 1; ir++){
-		for(int ic = -1; ic = 1; ic++){
+	for(int ir = -1; ir <= 1; ir++){
+		for(int ic = -1; ic <= 1; ic++){
 			if(grid[(row+ir+RMAX)%RMAX][(col+ic+CMAX)%CMAX] == 1){
 				Total1Neighbors++;
 			}
