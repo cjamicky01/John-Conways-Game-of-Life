@@ -62,7 +62,7 @@ void ComputeNextGrid(int current[][CMAX], int next[][CMAX], int birth[], int sur
 				}
 			}
 			else if (neigh1 < neigh2) {
-				if (birth[neigh1] == 1) next[i][j] = 2;
+				if (birth[neigh2] == 1) next[i][j] = 2;
 				else {
 					next[i][j] = 0;
 				}
@@ -127,25 +127,25 @@ void ParseRequirementsString(string requirements, int reqs[]) {
 			reqs[1] = 1;
 		}
 		if (c == '2') {
-			reqs[2] = 2;
+			reqs[2] = 1;
 		}
 		if (c == '3') {
-			reqs[3] = 3;
+			reqs[3] = 1;
 		}
 		if (c == '4') {
-			reqs[4] = 4;
+			reqs[4] = 1;
 		}
 		if (c == '5') {
-			reqs[5] = 5;
+			reqs[5] = 1;
 		}
 		if (c == '6') {
-			reqs[6] = 6;
+			reqs[6] = 1;
 		}
 		if (c == '7') {
-			reqs[7] = 7;
+			reqs[7] = 1;
 		}
 		if (c == '8') {
-			reqs[8] = 8;
+			reqs[8] = 1;
 		}
 	}
 }

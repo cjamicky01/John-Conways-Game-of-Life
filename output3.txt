@@ -6,8 +6,8 @@ Iterations = 34
 Simulation Birth/Survival Configuration
 birth[0] = 0      survival[0] = 0
 birth[1] = 0      survival[1] = 0
-birth[2] = 0      survival[2] = 2
-birth[3] = 3      survival[3] = 3
+birth[2] = 0      survival[2] = 1
+birth[3] = 1      survival[3] = 1
 birth[4] = 0      survival[4] = 0
 birth[5] = 0      survival[5] = 0
 birth[6] = 0      survival[6] = 0
