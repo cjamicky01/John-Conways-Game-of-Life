@@ -1,3 +1,8 @@
+#include <bitset>
+#include <iostream>
+#include <string>
+using namespace std;
+
 void OpenInputFile(string filename, ifstream& inFile);
 void LoadConstraints(ifstream& inFile, int& num, string& bstring, string& sstring);
 void LoadGrid(ifstream& inFile, int grid[][CMAX]);
@@ -29,10 +34,12 @@ void LoadGrid(ifstream& inFile, int grid[][CMAX]) {
 	string line;
 	getline(inFile, line);
 		for (int g = 0; g < CMAX; g++) {
-		for (int h = 0; h < RMAX; h++) {
-			getline(inFile, line, ' '); //Pull until space is hit
+		for (int h = 0; h < RMAX-1; h++) {
+			getline(inFile,line,' '); //Pull until space is hit
 			grid[g][h] = atoi(line.c_str()); //pull values of grid in text file here
 		}
+		getline(inFile, line, '\n');		//The last line might not be terminated with a space so we check for a new line and split using that
+		grid[g][9] = atoi(line.c_str());	//Set the last value in the row
 	}
 }
 
